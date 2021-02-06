@@ -27,9 +27,9 @@
 
 #import the external functions from the external script files.
 . "$PSScriptRoot\Get-AdministrationRight"
-. "$PSScriptRoot\Get-TortoiseGitBinary"
-. "$PSScriptRoot\Get-TortoiseGit"
 . "$PSScriptRoot\Get-OSArchitecture"
+. "$PSScriptRoot\Get-TortoiseGit"
+. "$PSScriptRoot\Get-TortoiseGitBinary"
 
 #throw exception if no administration right.
 $IsAdministrator = Get-AdministrationRight
@@ -39,6 +39,7 @@ if ($IsAdministrator -ne $true)
     Write-Warning -Message "You are currently running this script WITHOUT the administration right. Please run with administration right. Exit." -WarningAction Stop
 }
 
+#function to install the TortoiseGit application.
 function Install-TortoiseGit
 {
     Param
@@ -111,4 +112,11 @@ function Install-TortoiseGit
     }
 }
 
+#log the logging into log file.
+Start-Transcript -Path "$PSScriptRoot\$( $MyInvocation.ScriptName )"
+
+#execute the function.
 Install-TortoiseGit
+
+#stop to log the logging.
+Stop-Transcript
